@@ -79,3 +79,7 @@ typings/
 # DynamoDB Local files
 .dynamodb/
 
+# Composer specific file
+vendor
+composer.phar
+

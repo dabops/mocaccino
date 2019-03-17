@@ -23,6 +23,9 @@ RUN npm i npm@latest
 # We copy our project in the "app" folder
 COPY . .
 
+# build app for production with minification
+RUN npm run build
+
 # We expose to our docker environment (network) the port
 # we are using within the application. (ie 80)
 EXPOSE 80
