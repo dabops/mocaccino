@@ -1,3 +1,5 @@
+[![CircleCI](https://circleci.com/gh/dabops/mocaccino.svg?style=svg)](https://circleci.com/gh/dabops/mocaccino)
+
 # mocaccino
 
 > My laudable Nuxt.js project
