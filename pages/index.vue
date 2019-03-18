@@ -1,5 +1,5 @@
 <template>
-  <section class="container">
+  <section v-if="!err" class="container">
     <div v-if="submited">
       <user-welcome :user="user" />
       <transition name="fade" mode="out-in">
@@ -13,7 +13,7 @@
           <div v-else>
             LOL
           </div>
-          <a class="button is-primary" @click="onRerun">
+          <a class="button is-primary" @click="winner = ''">
             Play again to this awesome game ?
           </a>
         </div>
@@ -34,6 +34,17 @@
       <a class="button is-primary" @click="onSubmit">Click</a>
     </div>
   </section>
+  <section
+    v-else
+    class="hero is-dark"
+    style="background-image: url('/the-rock.jpg'); background-size: cover;"
+  >
+    <div class="hero-body">
+      <div class="container">
+        <h1 class="title">Une erreur s'est produite</h1>
+      </div>
+    </div>
+  </section>
 </template>
 
 <script>
@@ -50,13 +61,16 @@ export default {
       winner: '',
       name: '',
       submited: false,
-      user: {}
+      user: {},
+      err: false
     }
   },
   methods: {
-    onRerun() {
-      this.winner = ''
-    },
+    /**
+     * Update the API store with winner and increment his score !
+     * @param winner
+     * @returns {Promise<void>}
+     */
     async handleWinner(winner) {
       if (winner === 'X') {
         this.user = await this.$axios
@@ -64,13 +78,23 @@ export default {
             wins: this.user.wins !== null ? this.user.wins + 1 : 1
           })
           .catch(err => {
-            console.log(err.response)
+            this.err = true
+            this.$sentry.captureException(new Error(err.response))
           })
       }
       this.winner = winner
     },
+    /**
+     * Store for the first time the new player
+     * @returns {Promise<void>}
+     */
     async onSubmit() {
-      this.user = await this.$axios.$post('/users/', { name: this.name })
+      this.user = await this.$axios
+        .$post('/users/', { name: this.name })
+        .catch(err => {
+          this.err = true
+          this.$sentry.captureException(new Error(err.response))
+        })
       this.submited = true
     }
   }

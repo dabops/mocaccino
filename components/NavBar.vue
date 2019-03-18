@@ -22,5 +22,15 @@
         <span aria-hidden="true"></span>
       </a>
     </div>
+
+    <div class="navbar-end">
+      <div class="navbar-item">
+        <div class="buttons">
+          <a class="button is-primary" href="http://ristretto.docker.localhost">
+            <strong>Admin Board</strong>
+          </a>
+        </div>
+      </div>
+    </div>
   </nav>
 </template>

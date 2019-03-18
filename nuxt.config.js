@@ -46,9 +46,16 @@ module.exports = {
             : 'http://localhost:8000'
       }
     ],
+    '@nuxtjs/sentry',
     // Doc:https://github.com/nuxt-community/modules/tree/master/packages/bulma
     '@nuxtjs/bulma'
   ],
+
+  sentry: {
+    dsn: 'https://324e115e4f0d42f58f3c9ce2b7bcd68a@sentry.io/1417059', // Enter your project's DSN here
+    config: {} // Additional config
+  },
+
   /*
    ** Axios module configuration
    */
