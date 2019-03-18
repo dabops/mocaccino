@@ -13,6 +13,7 @@ jobs:
       # Checkout code
       - checkout
 
+      # Check if the package.json was already cached
       - restore_cache:
           key: dependency-cache-{{ checksum "package.json" }}
 
@@ -21,6 +22,7 @@ jobs:
           name: npm-install
           command: npm install
 
+      # Save the package.json and node module if the key change
       - save_cache:
           key: dependency-cache-{{ checksum "package.json" }}
           paths:
